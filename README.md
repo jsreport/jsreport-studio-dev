@@ -1,4 +1,8 @@
 # jsreport-studio-dev
+
+[![Build Status](https://travis-ci.org/jsreport/jsreport-studio-dev.png?branch=master)](https://travis-ci.org/jsreport/jsreport-studio-dev)
+[![NPM Version](http://img.shields.io/npm/v/jsreport-studio-dev.svg?style=flat-square)](https://npmjs.com/package/jsreport-studio-dev)
+
 > **Utils for developing jsreport studio extensions**
 
 ## Building studio extension
