@@ -2,7 +2,7 @@
   "author": {
     "name": "Jan Blaha"
   },
-  "version": "0.2.5",
+  "version": "0.2.6",
   "bugs": {
     "url": "https://github.com/jsreport/jsreport-studio-dev/issues"
   },
@@ -26,7 +26,7 @@
     "type": "git",
     "url": "git+ssh://git@github.com/jsreport/jsreport-studio-dev.git"
   },
-  "devDependencies": {
+  "dependencies": {
     "babel-core": "6.9.0",
     "babel-loader": "6.2.4",
     "babel-plugin-add-module-exports": "0.2.1",
@@ -44,6 +44,7 @@
     "css-loader": "0.23.1",
     "file-loader": "0.8.5",
     "json-loader": "0.5.4",
+    "in-publish": "2.0.0",
     "less": "2.7.1",
     "less-loader": "2.2.3",
     "loader-utils": "^0.2.15",
@@ -55,8 +56,5 @@
     "style-loader": "0.13.1",
     "url-loader": "0.5.7",
     "webpack": "1.13.1"
-  },
-  "dependencies": {
-    "in-publish": "2.0.0"
   }
 }
