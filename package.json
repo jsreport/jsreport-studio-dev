@@ -25,7 +25,7 @@
     "type": "git",
     "url": "git+ssh://git@github.com/jsreport/jsreport-studio-dev.git"
   },
-  "version": "0.0.1",
+  "version": "0.1.0",
   "devDependencies": {
     "babel-core": "6.9.0",
     "babel-loader": "6.2.4",
