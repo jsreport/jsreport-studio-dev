@@ -7,8 +7,8 @@ console.log('Checking if jsreport installed')
 try {
   fs.statSync(path.join(process.cwd(), 'node_modules', 'jsreport'))
 } catch (e) {
-  console.error('jsreport module was not found, install it first ' + e.stack)
-  process.exit(1)
+  console.log('Installing the latest jsreport, this takes few minutes')
+  execSync('npm install jsreport@next', { stdio: [0, 1, 2] })
 }
 
 function tryRequire (module) {
@@ -19,12 +19,12 @@ function tryRequire (module) {
   }
 }
 
-function install (p) {
+function installStudio (p) {
   console.log('Installing jsreport-studio dev dependencies at ' + p)
   return execSync('npm install', { stdio: [0, 1, 2], cwd: p })
 }
 
-function installIfRequired (p) {
+function installStudioIfRequired (p) {
   var packageJson
   try {
     packageJson = JSON.parse(fs.readFileSync(path.join(p, 'package.json'), 'utf8'))
@@ -37,14 +37,14 @@ function installIfRequired (p) {
       // somehow npm install failes on EBUSY error if this field is not deleted
       delete packageJson._requiredBy
       fs.writeFileSync(path.join(p, 'package.json'), JSON.stringify(packageJson, null, 2), 'utf8')
-      return install(p)
+      return installStudio(p)
     }
   }
 }
 
 console.log('Making sure jsreport-studio has dev dependencies installed')
-installIfRequired(path.join(process.cwd(), 'node_modules', 'jsreport', 'node_modules', 'jsreport-studio'))
-installIfRequired(path.join(process.cwd(), 'node_modules', 'jsreport-studio'))
+installStudioIfRequired(path.join(process.cwd(), 'node_modules', 'jsreport', 'node_modules', 'jsreport-studio'))
+installStudioIfRequired(path.join(process.cwd(), 'node_modules', 'jsreport-studio'))
 
 console.log('Starting...')
 
