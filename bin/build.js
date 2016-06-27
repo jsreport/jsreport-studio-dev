@@ -1,4 +1,4 @@
-#! /usr/bin/env node
+#!/usr/bin/env node
 var webpack = require('webpack')
 
 var exposedLibraries = ['react', 'react-dom', 'superagent', 'react-list', 'bluebird', 'socket.io-client', 'filesaver.js-npm']

@@ -1,4 +1,4 @@
-#! /usr/bin/env node
+#!/usr/bin/env node
 var fs = require('fs')
 var path = require('path')
 var execSync = require('child_process').execSync
@@ -53,4 +53,3 @@ var jsreport = require(path.join(process.cwd(), 'node_modules', 'jsreport'))
 jsreport().init().catch(function (e) {
   console.error(e)
 })
-
