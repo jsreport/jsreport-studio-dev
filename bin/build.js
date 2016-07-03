@@ -91,5 +91,5 @@ webpack({
 
   console.log(stats.toString({ colors: true, chunks: true, cached: false }))
 
-  console.log('webpack build ok')
+  console.log('webpack build  ok')
 })

@@ -46,7 +46,7 @@ console.log('Making sure jsreport-studio has dev dependencies installed')
 installStudioIfRequired(path.join(process.cwd(), 'node_modules', 'jsreport', 'node_modules', 'jsreport-studio'))
 installStudioIfRequired(path.join(process.cwd(), 'node_modules', 'jsreport-studio'))
 
-console.log('Starting...')
+console.log('Starting ...')
 
 process.env.NODE_ENV = 'jsreport-development'
 var jsreport = require(path.join(process.cwd(), 'node_modules', 'jsreport'))
