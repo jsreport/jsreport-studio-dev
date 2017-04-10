@@ -2,6 +2,7 @@
 var fs = require('fs')
 var path = require('path')
 var execSync = require('child_process').execSync
+var yargs = require('yargs')
 
 var argv = yargs.options({
   'run-only': {
