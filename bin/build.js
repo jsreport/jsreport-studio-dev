@@ -30,6 +30,7 @@ webpack({
   ],
   module: {
     loaders: [
+      { test: /\.json$/, loader: 'json-loader' },
       {
         test: /.jsx?$/,
         exclude: /node_modules/,
@@ -44,8 +45,14 @@ webpack({
       },
       {
         test: /\.scss$/,
-        loader: 'style!css?modules&importLoaders=2&sourceMap&localIdentName=[local]___[hash:base64:5]!sass?outputStyle=expanded&sourceMap'
+        loader: 'style!css?modules&importLoaders=2&sourceMap&localIdentName=[local]___[hash:base64:5]!postcss-loader!sass?outputStyle=expanded&sourceMap'
       }
+    ]
+  },
+  postcss: function () {
+    return [
+      require('postcss-flexbugs-fixes'),
+      require('autoprefixer')
     ]
   },
   resolveLoader: {
