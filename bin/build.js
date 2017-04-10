@@ -90,6 +90,8 @@ var defaultConfig = {
 var config
 
 if (argv.config) {
+  console.log('using custom webpack config at:', argv.config)
+
   try {
     config = require(path.resolve(process.cwd(), argv.config))
   } catch (e) {
