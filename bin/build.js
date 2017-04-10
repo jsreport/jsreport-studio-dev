@@ -1,6 +1,17 @@
 #!/usr/bin/env node
 var path = require('path')
-var argv = require('yargs').option('config', { alias: 'c', string: true, requiresArg: true }).argv;
+var yargs = require('yargs')
+
+var args = yargs.options({
+  config: {
+    type: 'string',
+    requiresArg: true
+  },
+  'disable-chunks-info': {
+    type: 'boolean'
+  }
+}).argv
+
 var webpack = require('webpack')
 
 var exposedLibraries = ['react', 'react-dom', 'superagent', 'react-list', 'bluebird', 'socket.io-client', 'filesaver.js-npm']
@@ -114,7 +125,7 @@ webpack(config, function (err, stats) {
     process.exit(1)
   }
 
-  console.log(stats.toString({ colors: true, chunks: true, cached: false }))
+  console.log(stats.toString({ colors: true, chunks: argv.disableChunksInfo === true ? false : true, cached: false }))
 
   console.log('webpack build  ok')
 })
