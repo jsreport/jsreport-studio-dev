@@ -62,7 +62,8 @@
     "strip-loader": "0.1.2",
     "style-loader": "0.13.1",
     "url-loader": "0.5.7",
-    "webpack": "1.13.1"
+    "webpack": "1.13.1",
+    "yargs": "7.0.2"
   },
   "devDependencies": {
     "eslint": "2.10.2",
