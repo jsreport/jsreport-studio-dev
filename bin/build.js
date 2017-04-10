@@ -2,7 +2,7 @@
 var path = require('path')
 var yargs = require('yargs')
 
-var args = yargs.options({
+var argv = yargs.options({
   config: {
     type: 'string',
     requiresArg: true
