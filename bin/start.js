@@ -3,7 +3,15 @@ var fs = require('fs')
 var path = require('path')
 var execSync = require('child_process').execSync
 
+var argv = yargs.options({
+  'run-only': {
+    type: 'boolean',
+    default: false
+  }
+}).argv
+
 console.log('Checking if jsreport installed')
+
 try {
   fs.statSync(path.join(process.cwd(), 'node_modules', 'jsreport'))
 } catch (e) {
@@ -42,13 +50,18 @@ function installStudioIfRequired (p) {
   }
 }
 
-console.log('Making sure jsreport-studio has dev dependencies installed')
-installStudioIfRequired(path.join(process.cwd(), 'node_modules', 'jsreport', 'node_modules', 'jsreport-studio'))
-installStudioIfRequired(path.join(process.cwd(), 'node_modules', 'jsreport-studio'))
+if (!argv.runOnly) {
+  console.log('Making sure jsreport-studio has dev dependencies installed')
+  installStudioIfRequired(path.join(process.cwd(), 'node_modules', 'jsreport', 'node_modules', 'jsreport-studio'))
+  installStudioIfRequired(path.join(process.cwd(), 'node_modules', 'jsreport-studio'))
+}
 
 console.log('Starting ...')
 
-process.env.NODE_ENV = 'jsreport-development'
+if (!argv.runOnly) {
+  process.env.NODE_ENV = 'jsreport-development'
+}
+
 var jsreport = require(path.join(process.cwd(), 'node_modules', 'jsreport'))
 jsreport().init().catch(function (e) {
   console.error(e)
