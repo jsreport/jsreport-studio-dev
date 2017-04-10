@@ -95,7 +95,7 @@ if (argv.config) {
   try {
     config = require(path.resolve(process.cwd(), argv.config))
   } catch (e) {
-    throw new Error('Error while trying to use config in ' + argv.config + ' : ' e.message)
+    throw new Error('Error while trying to use config in ' + argv.config + ' : ' + e.message)
   }
 } else {
   config = defaultConfig
