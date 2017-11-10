@@ -114,7 +114,7 @@ if (argv.config) {
 
 webpack(config, function (err, stats) {
   if (err) {
-    console.err(err)
+    console.error(err)
     return process.exit(1)
   }
 
