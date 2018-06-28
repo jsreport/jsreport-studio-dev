@@ -8,6 +8,9 @@ var argv = yargs.options({
   'run-only': {
     type: 'boolean',
     default: false
+  },
+  'entry-point': {
+    type: 'string'
   }
 }).argv
 
@@ -63,7 +66,14 @@ if (!argv.runOnly) {
   process.env.NODE_ENV = 'jsreport-development'
 }
 
-var jsreport = require(path.join(process.cwd(), 'node_modules', 'jsreport'))
-jsreport().init().catch(function (e) {
-  console.error(e)
-})
+if (!argv.entryPoint) {
+  var jsreport = require(path.join(process.cwd(), 'node_modules', 'jsreport'))
+  jsreport().init().catch(function (e) {
+    console.error(e)
+  })
+} else {
+  var entryPath = path.resolve(process.cwd(), argv.entryPoint)
+
+  console.log('Using custom entry point at ' + entryPath)
+  require(entryPath)
+}
