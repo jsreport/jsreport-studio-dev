@@ -68,7 +68,9 @@ if (!argv.runOnly) {
 
 if (!argv.entryPoint) {
   var jsreport = require(path.join(process.cwd(), 'node_modules', 'jsreport'))
-  jsreport().init().catch(function (e) {
+  jsreport({
+    rootDirectory: process.cwd()
+  }).init().catch(function (e) {
     console.error(e)
   })
 } else {
