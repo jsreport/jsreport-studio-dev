@@ -11,7 +11,7 @@ var argv = yargs.options({
   },
   'entry-point': {
     type: 'string'
-  }
+  } 
 }).argv
 
 console.log('Checking if jsreport installed')
@@ -67,13 +67,23 @@ if (!argv.runOnly) {
 }
 
 if (!argv.entryPoint) {
+  var currentExtension = null
+  if (fs.existsSync(path.join(process.cwd(), 'jsreport.config.js'))) {
+    currentExtension = require(path.join(process.cwd(), 'jsreport.config.js')).name
+  }  
+
   var jsreport = require(path.join(process.cwd(), 'node_modules', 'jsreport'))
   jsreport({
-    rootDirectory: process.cwd()
+    rootDirectory: process.cwd(),
+    extensions: {
+      studio: {
+        extensionsInDevMode: currentExtension
+      }
+    }
   }).init().catch(function (e) {
     console.error(e)
   })
-} else {
+} else {  
   var entryPath = path.resolve(process.cwd(), argv.entryPoint)
 
   console.log('Using custom entry point at ' + entryPath)
