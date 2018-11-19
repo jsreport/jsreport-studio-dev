@@ -11,7 +11,7 @@ var argv = yargs.options({
   },
   'entry-point': {
     type: 'string'
-  } 
+  }
 }).argv
 
 console.log('Checking if jsreport installed')
@@ -70,20 +70,20 @@ if (!argv.entryPoint) {
   var currentExtension = null
   if (fs.existsSync(path.join(process.cwd(), 'jsreport.config.js'))) {
     currentExtension = require(path.join(process.cwd(), 'jsreport.config.js')).name
-  }  
+  }
+
+  // define at startup what is the current extension,
+  // so studio can concat this value with another configuration passed
+  // to get all extensions configured in dev mode
+  process.env.JSREPORT_CURRENT_EXTENSION = currentExtension
 
   var jsreport = require(path.join(process.cwd(), 'node_modules', 'jsreport'))
   jsreport({
-    rootDirectory: process.cwd(),
-    extensions: {
-      studio: {
-        extensionsInDevMode: currentExtension
-      }
-    }
+    rootDirectory: process.cwd()
   }).init().catch(function (e) {
     console.error(e)
   })
-} else {  
+} else {
   var entryPath = path.resolve(process.cwd(), argv.entryPoint)
 
   console.log('Using custom entry point at ' + entryPath)
