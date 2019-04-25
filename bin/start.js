@@ -1,18 +1,16 @@
 #!/usr/bin/env node
-var fs = require('fs')
-var path = require('path')
-var execSync = require('child_process').execSync
-var yargs = require('yargs')
+const fs = require('fs')
+const path = require('path')
+const execSync = require('child_process').execSync
+const argsParser = require('yargs-parser')
 
-var argv = yargs.options({
-  'run-only': {
-    type: 'boolean',
-    default: false
-  },
-  'entry-point': {
-    type: 'string'
+const argv = argsParser(process.argv.slice(2), {
+  boolean: ['run-only'],
+  string: ['entry-point'],
+  default: {
+    'run-only': false
   }
-}).argv
+})
 
 console.log('Checking if jsreport installed')
 
@@ -21,37 +19,6 @@ try {
 } catch (e) {
   console.log('Installing the latest jsreport, this takes few minutes')
   execSync('npm install jsreport --no-save', { stdio: [0, 1, 2] })
-}
-
-function tryRequire (module) {
-  try {
-    return fs.statSync(module)
-  } catch (e) {
-    return false
-  }
-}
-
-function installStudio (p) {
-  console.log('Installing jsreport-studio dev dependencies at ' + p)
-  return execSync('npm install', { stdio: [0, 1, 2], cwd: p })
-}
-
-function installStudioIfRequired (p) {
-  var packageJson
-  try {
-    packageJson = JSON.parse(fs.readFileSync(path.join(p, 'package.json'), 'utf8'))
-  } catch (e) {
-    return
-  }
-
-  for (var k in packageJson.devDependencies) {
-    if (!tryRequire(path.join(p, 'node_modules', k))) {
-      // somehow npm install failes on EBUSY error if this field is not deleted
-      delete packageJson._requiredBy
-      fs.writeFileSync(path.join(p, 'package.json'), JSON.stringify(packageJson, null, 2), 'utf8')
-      return installStudio(p)
-    }
-  }
 }
 
 if (!argv.runOnly) {
@@ -67,7 +34,8 @@ if (!argv.runOnly) {
 }
 
 if (!argv.entryPoint) {
-  var currentExtension = null
+  let currentExtension = null
+
   if (fs.existsSync(path.join(process.cwd(), 'jsreport.config.js'))) {
     currentExtension = require(path.join(process.cwd(), 'jsreport.config.js')).name
   }
@@ -77,15 +45,48 @@ if (!argv.entryPoint) {
   // to get all extensions configured in dev mode
   process.env.JSREPORT_CURRENT_EXTENSION = currentExtension
 
-  var jsreport = require(path.join(process.cwd(), 'node_modules', 'jsreport'))
+  const jsreport = require(path.join(process.cwd(), 'node_modules', 'jsreport'))
+
   jsreport({
     rootDirectory: process.cwd()
   }).init().catch(function (e) {
     console.error(e)
   })
 } else {
-  var entryPath = path.resolve(process.cwd(), argv.entryPoint)
+  const entryPath = path.resolve(process.cwd(), argv.entryPoint)
 
-  console.log('Using custom entry point at ' + entryPath)
+  console.log(`Using custom entry point at ${entryPath}`)
   require(entryPath)
+}
+
+function tryRequire (module) {
+  try {
+    return fs.statSync(module)
+  } catch (e) {
+    return false
+  }
+}
+
+function installStudio (p) {
+  console.log(`Installing jsreport-studio dev dependencies at ${p}`)
+  return execSync('npm install', { stdio: [0, 1, 2], cwd: p })
+}
+
+function installStudioIfRequired (p) {
+  let packageJson
+
+  try {
+    packageJson = JSON.parse(fs.readFileSync(path.join(p, 'package.json'), 'utf8'))
+  } catch (e) {
+    return
+  }
+
+  for (let k in packageJson.devDependencies) {
+    if (!tryRequire(path.join(p, 'node_modules', k))) {
+      // somehow npm install failes on EBUSY error if this field is not deleted
+      delete packageJson._requiredBy
+      fs.writeFileSync(path.join(p, 'package.json'), JSON.stringify(packageJson, null, 2), 'utf8')
+      return installStudio(p)
+    }
+  }
 }
