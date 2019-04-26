@@ -1,3 +1,6 @@
+const path = require('path')
+const webpack = require('webpack')
+
 const exposedLibraries = ['react', 'react-dom', 'superagent', 'react-list', 'bluebird', 'socket.io-client', 'filesaver.js-npm']
 
 module.exports = {
@@ -9,7 +12,19 @@ module.exports = {
     main: './studio/main_dev'
   },
   output: {
-    filename: './studio/main.js'
+    filename: 'main.js',
+    path: path.join(process.cwd(), 'studio'),
+    pathinfo: false
+  },
+  performance: {
+    hints: 'warning'
+  },
+  optimization: {
+    nodeEnv: 'production',
+    namedModules: false,
+    namedChunks: false,
+    occurrenceOrder: true,
+    flagIncludedChunks: true
   },
   externals: [
     (context, request, callback) => {
@@ -89,9 +104,7 @@ module.exports = {
   },
   plugins: [
     new webpack.DefinePlugin({
-      'process.env': {
-        'NODE_ENV': JSON.stringify('production')
-      },
+      'process.env.NODE_ENV': JSON.stringify('production'),
       __DEVELOPMENT__: false
     })
   ]
