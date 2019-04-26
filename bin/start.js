@@ -5,26 +5,32 @@ const execSync = require('child_process').execSync
 const argsParser = require('yargs-parser')
 
 const argv = argsParser(process.argv.slice(2), {
-  boolean: ['run-only'],
+  boolean: ['run-only', 'ignore-jsreport-install', 'ignore-jsreport-studio-install'],
   string: ['entry-point'],
   default: {
-    'run-only': false
+    'run-only': false,
+    'ignore-jsreport-install': false,
+    'ignore-jsreport-studio-install': false
   }
 })
 
-console.log('Checking if jsreport installed')
+if (!argv.ignoreJsreportInstall) {
+  console.log('Checking if jsreport installed')
 
-try {
-  fs.statSync(path.join(process.cwd(), 'node_modules', 'jsreport'))
-} catch (e) {
-  console.log('Installing the latest jsreport, this takes few minutes')
-  execSync('npm install jsreport --no-save', { stdio: [0, 1, 2] })
+  try {
+    fs.statSync(path.join(process.cwd(), 'node_modules', 'jsreport'))
+  } catch (e) {
+    console.log('Installing the latest jsreport, this takes few minutes')
+    execSync('npm install jsreport --no-save', { stdio: [0, 1, 2] })
+  }
 }
 
 if (!argv.runOnly) {
-  console.log('Making sure jsreport-studio has dev dependencies installed')
-  installStudioIfRequired(path.join(process.cwd(), 'node_modules', 'jsreport', 'node_modules', 'jsreport-studio'))
-  installStudioIfRequired(path.join(process.cwd(), 'node_modules', 'jsreport-studio'))
+  if (!argv.ignoreJsreportStudioInstall) {
+    console.log('Making sure jsreport-studio has dev dependencies installed')
+    installStudioIfRequired(path.join(process.cwd(), 'node_modules', 'jsreport', 'node_modules', 'jsreport-studio'))
+    installStudioIfRequired(path.join(process.cwd(), 'node_modules', 'jsreport-studio'))
+  }
 }
 
 console.log('Starting ...')
