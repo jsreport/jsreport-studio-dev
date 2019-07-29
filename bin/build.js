@@ -6,7 +6,7 @@ const extensionBuildConfig = require('../extensionBuildConfig')
 
 const argv = argsParser(process.argv.slice(2), {
   // additionally to config args, we expect any option passed to "stats." to be parsed
-  string: ['config'],
+  string: ['config', 'name'],
   boolean: ['verbose'],
   alias: {
     verbose: ['v']
@@ -51,7 +51,7 @@ if (argv.config) {
     throw new Error(`Error while trying to use config in ${argv.config}: ${e.message}`)
   }
 } else {
-  config = extensionBuildConfig
+  config = extensionBuildConfig(argv.name)
 }
 
 webpack(config, (err, stats) => {
