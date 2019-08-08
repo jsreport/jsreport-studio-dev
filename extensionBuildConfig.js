@@ -89,7 +89,7 @@ module.exports = (customExtName) => {
                 modules: true,
                 importLoaders: 1,
                 sourceMap: true,
-                localIdentName: `@${extensionName.toUpperCase()}-[name]-[local]`
+                localIdentName: `${extensionName.toUpperCase()}-[name]-[local]`
               }
             },
             {
@@ -121,7 +121,7 @@ module.exports = (customExtName) => {
         __DEVELOPMENT__: false
       }),
       new MiniCssExtractPlugin({
-        filename:  '[name].css', // '[name].[hash].css'
+        filename: '[name].css', // '[name].[hash].css'
         chunkFilename: '[id].css' // '[id].[hash].css'
       }),
       new webpack.ProgressPlugin()
