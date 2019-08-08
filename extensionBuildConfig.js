@@ -13,12 +13,12 @@ module.exports = (customExtName) => {
     extensionName = customExtName
   } else if (fs.existsSync(extensionConfigPath)) {
     try {
-      extensionName = require(extensionConfigPath).name.toUpperCase()
+      extensionName = require(extensionConfigPath).name
     } catch (e) {}
   }
 
   if (extensionName == null) {
-    extensionName = nanoid(6).toUpperCase()
+    extensionName = nanoid(6)
   }
 
   return {
@@ -89,7 +89,7 @@ module.exports = (customExtName) => {
                 modules: true,
                 importLoaders: 1,
                 sourceMap: true,
-                localIdentName: `JSREPORT-STUDIO-EXTENSION-${extensionName}-[path]-[name]--[local]`
+                localIdentName: `@${extensionName.toUpperCase()}-[name]-[local]`
               }
             },
             {
