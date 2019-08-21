@@ -89,7 +89,7 @@ module.exports = (customExtName) => {
                 modules: true,
                 importLoaders: 1,
                 sourceMap: true,
-                localIdentName: `${extensionName.toUpperCase()}-[name]-[local]`
+                localIdentName: `x-${extensionName}-[name]-[local]`
               }
             },
             {
