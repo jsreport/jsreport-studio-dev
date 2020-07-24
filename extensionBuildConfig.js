@@ -3,7 +3,18 @@ const fs = require('fs')
 const nanoid = require('nanoid')
 const webpack = require('webpack')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const exposedLibraries = ['react', 'react-dom', 'superagent', 'react-list', 'bluebird', 'socket.io-client', 'filesaver.js-npm']
+
+const exposedLibraries = [
+  'react',
+  'react-dom',
+  'prop-types',
+  'react-list',
+  'superagent',
+  'shortid',
+  'bluebird',
+  'filesaver.js-npm',
+  'socket.io-client'
+]
 
 module.exports = (customExtName) => {
   const extensionConfigPath = path.join(process.cwd(), 'jsreport.config.js')
