@@ -1,3 +1,6 @@
+**⚠️ This repository has been moved to the monorepo [jsreport/jsreport](https://github.com/jsreport/jsreport)**
+--
+
 # jsreport-studio-dev
 
 [![NPM Version](http://img.shields.io/npm/v/jsreport-studio-dev.svg?style=flat-square)](https://npmjs.com/package/jsreport-studio-dev)
